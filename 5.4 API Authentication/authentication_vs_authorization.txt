@@ -1,0 +1,2 @@
+api key authorisation: assoicate with client
+api key authentication: assoicate with user

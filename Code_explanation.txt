@@ -1,0 +1,44 @@
+app.post("/get-secret", async (req, res) => {
+  const searchId = req.body.id;
+  try {
+    const result = await axios.get(API_URL + "/secrets/" + searchId, config);
+    // render the content on index.ejs
+    res.render("index.ejs", { content: JSON.stringify(result.data) });
+  } catch (error) {
+    // render the content on index.ejs
+    res.render("index.ejs", { content: JSON.stringify(error.response.data) });
+  }
+});
+
+1. Route Handling:
+
+    Listens for incoming POST requests to the /get-secret endpoint.
+
+2. Request Processing:
+
+    Retrieves the id from the request body (req.body.id) submitted along with the POST request.
+
+3. Data Retrieval:
+
+    Utilizes the axios library to perform an asynchronous GET request to an external API endpoint (API_URL + "/secrets/" + searchId) using the extracted searchId.
+    The config variable (presumably defined elsewhere) might contain configuration settings for the axios request (such as headers or authentication details).
+
+4. Response Handling:
+
+    Upon a successful request (await axios.get), it renders the fetched data as content to an index.ejs file using res.render.
+    The fetched data (result.data) is serialized into a JSON string (JSON.stringify(result.data)) and passed as the content object to the index.ejs template.
+    In case of an error (catch block), it similarly renders the error response data (error.response.data) as content to the same index.ejs file.
+
+5. Rendering:
+
+    The res.render function passes the data (content) to the index.ejs file, which likely contains HTML/EJS markup to render the content dynamically.
+    This could involve displaying the fetched secret data or an error message within the rendered HTML page.
+
+6. Error Handling:
+
+    In the event of an error (such as an unsuccessful API request), it gracefully handles the error by rendering the error data onto the same page, providing feedback to the user or client.
+
+7. Asynchronous Operations:
+
+    The use of async/await with axios indicates that the code is handling asynchronous operations in a synchronous-looking manner, making it easier to read and manage asynchronous code.
+    In summary, this code defines a server route that interacts with an external API to retrieve secret data based on an ID submitted via a POST request. It then renders the retrieved data or error response onto an index.ejs file for presentation to the client or user.
